@@ -411,8 +411,12 @@ class NCMore: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
         // Menu Function
         if sections[indexPath.section].type == .account {
-            tapImageLogoManageAccount()
-            return
+            // Created an instance of the Accounts view
+            let ncAccountsView = CCManageAccounts()
+
+            // Created a hosting controller for the NCSettings view & performing the segue
+            let hostingController = UIHostingController(rootView: ncAccountsView)
+            self.navigationController?.pushViewController(hostingController, animated: true)
         }
         // Checking if the selected row is the Settings cell
         if item.name == "_settings_" {

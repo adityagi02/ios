@@ -16,6 +16,7 @@
 		371B5A2E23D0B04500FAFAE9 /* NCMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371B5A2D23D0B04500FAFAE9 /* NCMenu.swift */; };
 		3781B9B023DB2B7E006B4B1D /* AppDelegate+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3781B9AF23DB2B7E006B4B1D /* AppDelegate+Menu.swift */; };
 		8491B1CD273BBA82001C8C5B /* UIViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8491B1CC273BBA82001C8C5B /* UIViewController+Menu.swift */; };
+		AC20B92E2BDD685000B75FC9 /* CCManageAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC20B92D2BDD685000B75FC9 /* CCManageAccount.swift */; };
 		AC2880D42B96FC0300A80156 /* NCSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2880D32B96FC0300A80156 /* NCSettingsModel.swift */; };
 		AC3068BC2B9DBAFA0082E54A /* AutoUploadFileNamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3068BB2B9DBAFA0082E54A /* AutoUploadFileNamesView.swift */; };
 		AC3575352B9896FE00D28E9C /* AutoUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3575342B9896FE00D28E9C /* AutoUploadView.swift */; };
@@ -986,6 +987,7 @@
 		371B5A3223D0BD5500FAFAE9 /* FloatingPanel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FloatingPanel.framework; path = Carthage/Build/iOS/FloatingPanel.framework; sourceTree = "<group>"; };
 		3781B9AF23DB2B7E006B4B1D /* AppDelegate+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Menu.swift"; sourceTree = "<group>"; };
 		8491B1CC273BBA82001C8C5B /* UIViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Menu.swift"; sourceTree = "<group>"; };
+		AC20B92D2BDD685000B75FC9 /* CCManageAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCManageAccount.swift; sourceTree = "<group>"; };
 		AC2880D32B96FC0300A80156 /* NCSettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NCSettingsModel.swift; sourceTree = "<group>"; };
 		AC3068BB2B9DBAFA0082E54A /* AutoUploadFileNamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoUploadFileNamesView.swift; sourceTree = "<group>"; };
 		AC3575342B9896FE00D28E9C /* AutoUploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoUploadView.swift; sourceTree = "<group>"; };
@@ -1853,6 +1855,7 @@
 			children = (
 				ACBA97E82B9AD90D006B8710 /* CCSettingsAdvanced.swift */,
 				ACBA97EA2B9B03A3006B8710 /* CCSettingsAdvancedViewModel.swift */,
+				AC20B92D2BDD685000B75FC9 /* CCManageAccount.swift */,
 			);
 			path = CCAdvanced;
 			sourceTree = "<group>";
@@ -4230,6 +4233,7 @@
 				F765F73125237E3F00391DBE /* NCRecent.swift in Sources */,
 				F76B3CCE1EAE01BD00921AC9 /* NCBrand.swift in Sources */,
 				F3A0479B2BD2668800658E7B /* NCAssistant.swift in Sources */,
+				AC20B92E2BDD685000B75FC9 /* CCManageAccount.swift in Sources */,
 				F359D8672A7D03420023F405 /* NCUtility+Exif.swift in Sources */,
 				F738D4902756740100CD1D38 /* NCLoginNavigationController.swift in Sources */,
 				F77B0E981D118A16002130FE /* CCManageAccount.m in Sources */,
