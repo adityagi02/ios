@@ -10,9 +10,17 @@ import SwiftUI
 
 struct CCManageAccounts: View {
     @State var alias: String = ""
+    var activeAccount = NCManageDatabase.shared.getActiveAccount()
+    /// State to control the visibility of the Certificate PN Details  view
+    @State private var showCertificatePNDetails = false
+    /// State to control the visibility of the Certificate Details  view
+    @State private var showCertificateDetails = false
+    /// State to control the visibility of the Certificate PN View
+    @State private var showCertificatePN = false
+    /// State to control the visibility of the Certificate View
+    @State private var showCertificate = false
     
     var body: some View {
-        
         // Section : ACCOUNTS -------------------------------------------
         // Open Login
         Form {
@@ -37,7 +45,6 @@ struct CCManageAccounts: View {
             }, footer: {
                 Text(NSLocalizedString("_alias_footer_", comment: ""))
             })
-            
             // Section : MANAGE ACCOUNT -------------------------------------------
             if !NCBrandOptions.shared.disable_manage_account {
                 Section(content: {
@@ -67,7 +74,6 @@ struct CCManageAccounts: View {
                             .font(.system(size: 16))
                         }
                     }
-                    
                     if !NCBrandOptions.shared.disable_multiaccount {
                         NavigationLink(destination: AutoUploadView(model: AutoUploadModel())) { // TODO:
                             HStack {
@@ -81,17 +87,14 @@ struct CCManageAccounts: View {
                             .font(.system(size: 16))
                         }
                     }
-                    
                 }, header: {
                     Text(NSLocalizedString("_manage_account_", comment: ""))
                 }, footer: {
                     Text(NSLocalizedString("_alias_footer_", comment: ""))
                 })
             }
-            
             // Section : CERIFICATES -------------------------------------------
             Section(header: Text(NSLocalizedString("_certificates_", comment: "")), content: {
-                
                 HStack {
                     Image("lock")
                         .resizable()
@@ -101,8 +104,11 @@ struct CCManageAccounts: View {
                     Text(NSLocalizedString("_certificate_details_", comment: ""))
                 }
                 .font(.system(size: 16))
-                .onTapGesture { } // TODO: ex.Acknowledgements
-                
+                .onTapGesture {
+                    showCertificateDetails = true
+                }.sheet(isPresented: $showCertificateDetails) {
+                    NCCertificateDetailsView(showText: $showCertificate, browserTitle: NSLocalizedString("_certificate_view_", comment: ""), host: AppDelegate().urlBase)
+                }
                 HStack {
                     Image("lock")
                         .resizable()
@@ -112,138 +118,134 @@ struct CCManageAccounts: View {
                     Text(NSLocalizedString("_certificate_pn_details_", comment: ""))
                 }
                 .font(.system(size: 16))
-                .onTapGesture { }
+                .onTapGesture {
+                    showCertificatePNDetails = true
+                }.sheet(isPresented: $showCertificatePNDetails) {
+                    NCCertificateDetailsView(showText: $showCertificatePN, browserTitle: NSLocalizedString("_certificate_view_", comment: ""), host: NCBrandOptions.shared.pushNotificationServerProxy)
+                }
             })
             // Section : USER INFORMATION -------------------------------------------
             Section(header: Text(NSLocalizedString("_personal_information_", comment: "")), content: {
                 // Full Name
-                HStack {
-                    Image("user")
-                        .resizable()
-                        .renderingMode(.template)
-                        .frame(width: 20, height: 20)
-                        .foregroundColor(.secondary)
-                    Text(NSLocalizedString("_user_full_name_", comment: ""))
-                    
-                    Spacer()
-                    
-                    Text(NSLocalizedString("_user_full_name_", comment: ""))
-                        .foregroundColor(.secondary)
+                if let activeAccount, activeAccount.displayName.count > 0 {
+                    HStack {
+                        Image("user")
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(.secondary)
+                        Text(NSLocalizedString("_user_full_name_", comment: ""))
+                        Spacer()
+                        Text(activeAccount.displayName)
+                            .foregroundColor(.secondary)
+                    }
+                    .font(.system(size: 16))
                 }
-                .font(.system(size: 16))
                 // Address
-                HStack {
-                    Image("address")
-                        .resizable()
-                        .renderingMode(.template)
-                        .frame(width: 20, height: 20)
-                        .foregroundColor(.secondary)
-                    
-                    Text(NSLocalizedString("_user_address_", comment: ""))
-                    
-                    Spacer()
-                    
-                    Text(NSLocalizedString("_user_address_", comment: ""))
-                        .foregroundColor(.secondary)
+                if let activeAccount, activeAccount.address.count > 0 {
+                    HStack {
+                        Image("address")
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(.secondary)
+                        Text(NSLocalizedString("_user_address_", comment: ""))
+                        Spacer()
+                        Text(activeAccount.address)
+                            .foregroundColor(.secondary)
+                    }
+                    .font(.system(size: 16))
                 }
-                .font(.system(size: 16))
                 // City + zip
-                HStack {
-                    Image("city")
-                        .resizable()
-                        .renderingMode(.template)
-                        .frame(width: 20, height: 20)
-                        .foregroundColor(.secondary)
-                    
-                    Text(NSLocalizedString("_user_city_", comment: ""))
-                    
-                    Spacer()
-                    
-                    Text(NSLocalizedString("_user_city_", comment: ""))
-                        .foregroundColor(.secondary)
+                if let activeAccount, activeAccount.city.count > 0 {
+                    HStack {
+                        Image("city")
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(.secondary)
+                        Text(NSLocalizedString("_user_city_", comment: ""))
+                        Spacer()
+                        Text(activeAccount.city)
+                            .foregroundColor(.secondary)
+                    }
+                    .font(.system(size: 16))
                 }
-                .font(.system(size: 16))
                 // Country
-                HStack {
-                    Image("country")
-                        .resizable()
-                        .renderingMode(.template)
-                        .frame(width: 20, height: 20)
-                        .foregroundColor(.secondary)
-                    
-                    Text(NSLocalizedString("_user_country_", comment: ""))
-                    
-                    Spacer()
-                    
-                    Text(NSLocalizedString("_user_country_", comment: ""))
-                        .foregroundColor(.secondary)
+                if let activeAccount, activeAccount.country.count > 0 {
+                    HStack {
+                        Image("country")
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(.secondary)
+                        Text(NSLocalizedString("_user_country_", comment: ""))
+                        Spacer()
+                        Text(activeAccount.country)
+                            .foregroundColor(.secondary)
+                    }
+                    .font(.system(size: 16))
                 }
-                .font(.system(size: 16))
                 // Phone
-                HStack {
-                    Image("phone")
-                        .resizable()
-                        .renderingMode(.template)
-                        .frame(width: 20, height: 20)
-                        .foregroundColor(.secondary)
-                    
-                    Text(NSLocalizedString("_user_phone_", comment: ""))
-                    
-                    Spacer()
-                    
-                    Text(NSLocalizedString("_user_phone_", comment: ""))
-                        .foregroundColor(.secondary)
+                if let activeAccount, activeAccount.phone.count > 0 {
+                    HStack {
+                        Image("phone")
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(.secondary)
+                        Text(NSLocalizedString("_user_phone_", comment: ""))
+                        Spacer()
+                        Text(activeAccount.phone)
+                            .foregroundColor(.secondary)
+                    }
+                    .font(.system(size: 16))
                 }
-                .font(.system(size: 16))
                 // Email
-                HStack {
-                    Image("email")
-                        .resizable()
-                        .renderingMode(.template)
-                        .frame(width: 20, height: 20)
-                        .foregroundColor(.secondary)
-                    
-                    Text(NSLocalizedString("_user_email_", comment: ""))
-                    
-                    Spacer()
-                    
-                    Text(NSLocalizedString("_user_email_", comment: ""))
-                        .foregroundColor(.secondary)
+                if let activeAccount, activeAccount.email.count > 0 {
+                    HStack {
+                        Image("email")
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(.secondary)
+                        Text(NSLocalizedString("_user_email_", comment: ""))
+                        Spacer()
+                        Text(activeAccount.email)
+                            .foregroundColor(.secondary)
+                    }
+                    .font(.system(size: 16))
                 }
-                .font(.system(size: 16))
                 // Web
-                HStack {
-                    Image("network")
-                        .resizable()
-                        .renderingMode(.template)
-                        .frame(width: 20, height: 20)
-                        .foregroundColor(.secondary)
-                    
-                    Text(NSLocalizedString("_user_web_", comment: ""))
-                    
-                    Spacer()
-                    
-                    Text(NSLocalizedString("_user_web_", comment: ""))
-                        .foregroundColor(.secondary)
+                if let activeAccount, activeAccount.website.count > 0 {
+                    HStack {
+                        Image("network")
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(.secondary)
+                        Text(NSLocalizedString("_user_web_", comment: ""))
+                        Spacer()
+                        Text(activeAccount.website)
+                            .foregroundColor(.secondary)
+                    }
+                    .font(.system(size: 16))
                 }
-                .font(.system(size: 16))
                 // Twitter
-                HStack {
-                    Image("twitter")
-                        .resizable()
-                        .renderingMode(.template)
-                        .frame(width: 20, height: 20)
-                        .foregroundColor(.secondary)
-                    
-                    Text(NSLocalizedString("_user_twitter_", comment: ""))
-                    
-                    Spacer()
-                    
-                    Text(NSLocalizedString("_user_twitter_", comment: ""))
-                        .foregroundColor(.secondary)
+                if let activeAccount, activeAccount.website.count > 0 {
+                    HStack {
+                        Image("twitter")
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(.secondary)
+                        Text(NSLocalizedString("_user_twitter_", comment: ""))
+                        Spacer()
+                        Text(activeAccount.website)
+                            .foregroundColor(.secondary)
+                    }
+                    .font(.system(size: 16))
                 }
-                .font(.system(size: 16))
-                
             })
         }
         .navigationBarTitle("Credentials")

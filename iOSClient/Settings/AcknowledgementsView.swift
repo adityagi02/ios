@@ -68,7 +68,7 @@ struct AcknowledgementsView: View {
                 }
             }
         }
-        .navigationBarTitle("_acknowledgements_", displayMode: .inline)
+        .navigationBarTitle(Text(""), displayMode: .inline)
         .onAppear {
             loadRTF()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
