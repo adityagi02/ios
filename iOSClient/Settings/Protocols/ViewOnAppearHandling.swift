@@ -1,11 +1,11 @@
 //
-//  Acknowledgements.h
+//  ViewOnAppearHandling.swift
 //  Nextcloud
 //
-//  Created by Marino Faggiana on 14/11/14.
-//  Copyright (c) 2014 Marino Faggiana. All rights reserved.
+//  Created by Aditya Tyagi on 17/03/24.
+//  Copyright © 2024 Marino Faggiana. All rights reserved.
 //
-//  Author Marino Faggiana <marino.faggiana@nextcloud.com>
+//  Author Aditya Tyagi <adityagi02@yahoo.com>
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -21,10 +21,18 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#import <UIKit/UIKit.h>
+import Foundation
 
-@interface Acknowledgements : UIViewController
+/// A protocol defining methods to handle view appearance events.
+protocol ViewOnAppearHandling: ObservableObject {
+    /// Triggered when the view appears.
+    func onViewAppear()
+}
 
-@property (nonatomic, weak) IBOutlet UITextView *txtTermini;
+typealias DefaultViewModelRepresentable = AccountUpdateHandling & ViewOnAppearHandling
 
-@end
+/// A protocol defining methods to handle account updates.
+protocol AccountUpdateHandling {
+    /// Updates the account information.
+    func updateAccount()
+}

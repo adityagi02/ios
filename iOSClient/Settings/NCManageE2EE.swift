@@ -266,6 +266,7 @@ struct NCViewE2EE: View {
                 }
             }
         }
+        .navigationBarTitle(NSLocalizedString("_e2e_settings_", comment: ""))
         .background(Color(UIColor.systemGroupedBackground))
     }
 }

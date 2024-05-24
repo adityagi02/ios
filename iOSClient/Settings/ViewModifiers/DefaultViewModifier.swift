@@ -1,11 +1,11 @@
 //
-//  CCManageAutoUpload.h
+//  DefaultViewModifier.swift
 //  Nextcloud
 //
-//  Created by Marino Faggiana on 01/09/15.
-//  Copyright (c) 2015 Marino Faggiana. All rights reserved.
+//  Created by Aditya Tyagi on 07/04/24.
+//  Copyright © 2024 Marino Faggiana. All rights reserved.
 //
-//  Author Marino Faggiana <marino.faggiana@nextcloud.com>
+//  Author Aditya Tyagi <adityagi02@yahoo.com>
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -21,8 +21,17 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#import <XLForm.h>
+import Foundation
+import SwiftUI
 
-@interface CCManageAutoUpload : XLFormViewController
+/// A view modifier that automatically calls a view model's `onViewAppear` function when the view appears on screen.
+struct DefaultViewModifier<ViewModel: ViewOnAppearHandling>: ViewModifier {
+  @ObservedObject var viewModel: ViewModel
 
-@end
+  func body(content: Content) -> some View {
+    content
+      .onAppear {
+        viewModel.onViewAppear()        // Call onViewAppear on view appearance
+      }
+  }
+}
